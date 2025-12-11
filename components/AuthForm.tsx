@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { createAccount, signInUser } from "@/lib/actions/user.actions";
+import { createAccount, signInUser,signInUserTest } from "@/lib/actions/user.actions";
 import OtpModal from "@/components/OTPModal";
 
 type FormType = "sign-in" | "sign-up";
@@ -54,9 +54,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
       const user =
         type === "sign-up"
           ? await createAccount({
-              fullName: values.fullName || "",
-              email: values.email,
-            })
+            fullName: values.fullName || "",
+            email: values.email,
+          })
           : await signInUser({ email: values.email });
 
       setAccountId(user.accountId);
@@ -67,6 +67,20 @@ const AuthForm = ({ type }: { type: FormType }) => {
     }
   };
 
+  const signInTestUser = async (values: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    setErrorMessage("");
+
+    try {
+      const user = await signInUserTest();
+      setAccountId(user.accountId);
+
+    } catch {
+      setErrorMessage("Failed to create account. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <>
       <Form {...form}>
@@ -126,6 +140,24 @@ const AuthForm = ({ type }: { type: FormType }) => {
             disabled={isLoading}
           >
             {type === "sign-in" ? "Sign In" : "Sign Up"}
+
+            {isLoading && (
+              <Image
+                src="/assets/icons/loader.svg"
+                alt="loader"
+                width={24}
+                height={24}
+                className="ml-2 animate-spin"
+              />
+            )}
+          </Button>
+
+            <Button
+            type="submit"
+            className="form-submit-button"
+            disabled={isLoading}
+          >
+            {'Test User'}
 
             {isLoading && (
               <Image

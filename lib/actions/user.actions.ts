@@ -139,3 +139,15 @@ export const signInUser = async ({ email }: { email: string }) => {
     handleError(error, "Failed to sign in user");
   }
 };
+
+
+export const signInUserTest = async () => {
+  try {
+      return parseStringify({ accountId: 693af82a003244dc5899 });
+
+    return parseStringify({ accountId: null, error: "User not found" });
+
+  } catch (error) {
+    handleError(error, "Failed to sign in user");
+  }
+};
