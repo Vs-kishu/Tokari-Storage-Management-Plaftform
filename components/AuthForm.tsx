@@ -153,9 +153,10 @@ const AuthForm = ({ type }: { type: FormType }) => {
           </Button>
 
             <Button
-            type="submit"
+            type="button"
             className="form-submit-button"
             disabled={isLoading}
+            onClick={()=>signInTestUser()}
           >
             {'Test User'}
 

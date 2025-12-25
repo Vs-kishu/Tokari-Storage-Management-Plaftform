@@ -143,11 +143,18 @@ export const signInUser = async ({ email }: { email: string }) => {
 
 export const signInUserTest = async () => {
   try {
-      return parseStringify({ accountId:"693af82a003244dc5899"});
+    const userExists = true; // mock condition
 
-    return parseStringify({ accountId: null, error: "User not found" });
+    if (userExists) {
+      return parseStringify({ accountId: "693af82a003244dc5899" });
+    }
 
+    return parseStringify({
+      accountId: null,
+      error: "User not found",
+    });
   } catch (error) {
     handleError(error, "Failed to sign in user");
   }
 };
+
